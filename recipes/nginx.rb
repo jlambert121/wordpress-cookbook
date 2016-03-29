@@ -17,23 +17,6 @@
 # limitations under the License.
 #
 
-node.set_unless['php-fpm']['pools'] = []
-
-include_recipe "php-fpm"
-
-php_fpm_pool "wordpress" do
-  listen "127.0.0.1:9001"
-  user node['wordpress']['install']['user']
-  group node['wordpress']['install']['group']
-  if node['platform'] == 'ubuntu' and node['platform_version'] == '10.04'
-    process_manager 'dynamic'
-  end
-  listen_owner node['wordpress']['install']['user']
-  listen_group node['wordpress']['install']['group']
-  php_options node['wordpress']['php_options']
-  start_servers 5
-end
-
 include_recipe "php::module_mysql"
 
 node.set_unless['nginx']['default_site_enabled'] = false
